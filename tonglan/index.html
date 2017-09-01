@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		ul,ol{
+			list-style: none;
+		}
+		.banner{
+			height: 520px;
+			width: 100%;
+			position: relative;
+			background: #ABB0B3;
+		}
+		.banner ul li{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 100%;
+			height: 520px;
+			display: none;
+
+		}
+		.banner ul li.cur{
+			display: block;
+		}
+		.banner ul li img{
+			height: 520px;
+			width: 1600px;
+			position: absolute;
+			left: 50%;
+			margin-left: -800px;
+		}
+		.inner_c{
+			width: 1600px;
+			height: 520px;
+			position: absolute;
+			left: 50%;
+			margin-left: -800px;
+		}
+		.btns a{
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			background: rgba(0, 0, 0, 0.8);
+			top: 50%;
+			margin-top: -30px;
+		}
+		.btns a.leftBtn{
+			left: 0px;
+		}
+		.btns a.rightBtn{
+			right: 0px;
+		}
+		.circles{
+			position: absolute;
+			bottom: 10px;
+			width: 150px;
+			left: 50%;
+			margin-left: -75px;
+			
+		}
+		.circles li{
+			float: left;
+			height: 20px;
+			width: 20px;
+			margin-right: 10px;
+			background: teal;
+		}
+		.circles li.cur{
+			background: deepskyblue;
+		}
+	</style>	
+</head>
+<body>
+	<div class="banner" id="banner">
+		<div class="imageList">
+			<ul>
+				<li class="cur" data-color="#ABB0B3"><a href="javascript:void(0);" ><img src="image/tl/tl (1).jpg" alt=""></a></li>
+				<li data-color="#291B1B"><a href="javascript:void(0);"><img src="image/tl/tl (2).jpg" alt=""></a></li>
+				<li data-color="#fff"><a href="javascript:void(0);"><img src="image/tl/tl (3).jpg" alt=""></a></li>
+				<li data-color="#2C415C"><a href="javascript:void(0);"><img src="image/tl/tl (4).jpg" alt=""></a></li>
+				<li data-color="#364435"><a href="javascript:void(0);"><img src="image/tl/tl (5).jpg" alt=""></a></li>
+			</ul>
+			<div class="inner_c">
+				<div class="btns">
+					<a href="javascript:void(0);" class="leftBtn"></a>
+					<a href="javascript:void(0);" class="rightBtn"></a>
+				</div>
+				<div class="circles">
+					<ol>
+						<li class="cur"></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript">
+	// 获取节点
+	var $leftBtn = $("#banner .leftBtn");
+	var $rightBtn = $("#banner .rightBtn");
+	var $circlesLis = $("#banner .circles li");
+	var $imageList = $("#banner .imageList ul li");
+	// 信号量
+	var idx = 0;
+	// 右按钮事件处理函数
+	$rightBtn.click(function(){
+
+		$imageList.eq(idx).fadeOut(500,function(){
+			// 这里的事件是500MS后触发的
+			$imageList.eq(idx).fadeIn(500);
+			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur');
+			// 下个图淡入的同时，改变li的背景颜色
+			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
+
+		});	
+		// 信号量大的变化，是和当前的图片淡出一起执行
+		idx++;
+		if( idx > $imageList.length -1){
+			idx = 0
+		}
+	})
+	$leftBtn.click(function(){
+
+		$imageList.eq(idx).fadeOut(500,function(){
+			// 这里的事件是500MS后触发的
+			$imageList.eq(idx).fadeIn(500);
+			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur')
+			// 下个图淡入的同时，改变li的背景颜色
+			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
+
+
+		});	
+		// 信号量大的变化，是和当前的图片淡出一起执行
+		idx--;
+		if( idx < 0){
+			idx = $imageList.length -1
+		}
+	})
+	$circlesLis.click(function(){
+		var i = $(this).index();
+		// 当前图淡出
+		$imageList.eq(idx).fadeOut(500,function(){
+
+			// 新图的淡入
+			$imageList.eq(idx).fadeIn(500);
+			// 小圆点的变化
+			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur');
+			// 下个图淡入的同时，改变li的背景颜色
+			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
+		});
+		// 改变信号量
+		idx = i;
+		
+	})
