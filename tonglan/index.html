@@ -5,163 +5,156 @@
 	<title>Document</title>
 	<style>
 		*{
-			margin: 0px;
-			padding: 0px;
+			padding:0;
+			margin:0;
 		}
 		ul,ol{
 			list-style: none;
 		}
 		.banner{
-			height: 520px;
-			width: 100%;
+			width:100%;
+			height:520px;
 			position: relative;
-			background: #ABB0B3;
+			background-color: #ABB0B3;
 		}
-		.banner ul li{
-			position: absolute;
-			top: 0px;
-			left: 0px;
+		.banner ._ul li{
 			width: 100%;
 			height: 520px;
 			display: none;
-
 		}
-		.banner ul li.cur{
+		.banner ._ul li.cur{
 			display: block;
 		}
-		.banner ul li img{
+		.banner ._ul li img{
+			position: absolute;
+			top:0;
+			left:50%;
+			width:1600px;
 			height: 520px;
-			width: 1600px;
+			margin-left:-800px;
+		}
+		.banner .inner_c{
+			width: 1200px;
+			height:520px;
 			position: absolute;
-			left: 50%;
-			margin-left: -800px;
+			top:0;
+			left:50%;
+			margin-left: -600px;
 		}
-		.inner_c{
-			width: 1600px;
-			height: 520px;
+		.banner .inner_c .L{
+			display: block;
+			width:40px;
+			height:40px;
+			background: #456456;
 			position: absolute;
-			left: 50%;
-			margin-left: -800px;
+			top:50%;
+			left:10px;
+			margin-top: -20px;
 		}
-		.btns a{
+		.banner .inner_c .R{
+			display: block;
+			width:40px;
+			height:40px;
+			background: #456456;
 			position: absolute;
-			width: 60px;
-			height: 60px;
-			background: rgba(0, 0, 0, 0.8);
-			top: 50%;
-			margin-top: -30px;
+			top:50%;
+			right:10px;
+			margin-top: -20px;
 		}
-		.btns a.leftBtn{
-			left: 0px;
-		}
-		.btns a.rightBtn{
-			right: 0px;
-		}
-		.circles{
+		.banner .inner_c ._ol{
+			width:150px;
+			height:20px;
 			position: absolute;
-			bottom: 10px;
-			width: 150px;
-			left: 50%;
+			bottom:20px;
+			left:50%;
 			margin-left: -75px;
-			
 		}
-		.circles li{
-			float: left;
-			height: 20px;
-			width: 20px;
+		.banner .inner_c ._ol li{
+			width:20px;
+			height:20px;
+			float:left;
 			margin-right: 10px;
-			background: teal;
+			background: pink;
 		}
-		.circles li.cur{
-			background: deepskyblue;
+		.banner .inner_c ._ol li.cur{
+			background: #111;
 		}
-	</style>	
+	</style>
 </head>
 <body>
-	<div class="banner" id="banner">
-		<div class="imageList">
-			<ul>
-				<li class="cur" data-color="#ABB0B3"><a href="javascript:void(0);" ><img src="image/tl/tl (1).jpg" alt=""></a></li>
-				<li data-color="#291B1B"><a href="javascript:void(0);"><img src="image/tl/tl (2).jpg" alt=""></a></li>
-				<li data-color="#fff"><a href="javascript:void(0);"><img src="image/tl/tl (3).jpg" alt=""></a></li>
-				<li data-color="#2C415C"><a href="javascript:void(0);"><img src="image/tl/tl (4).jpg" alt=""></a></li>
-				<li data-color="#364435"><a href="javascript:void(0);"><img src="image/tl/tl (5).jpg" alt=""></a></li>
-			</ul>
-			<div class="inner_c">
-				<div class="btns">
-					<a href="javascript:void(0);" class="leftBtn"></a>
-					<a href="javascript:void(0);" class="rightBtn"></a>
-				</div>
-				<div class="circles">
-					<ol>
-						<li class="cur"></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ol>
-				</div>
-			</div>
+	<div class="banner">
+		<ul class="_ul" id="_ul">
+			<li class="cur" data-color="#ABB0B3"><a href="javascript:;"><img src="image/tl/tl (1).jpg" alt=""></a></li>
+			<li data-color="#291B1B"><a href="javascript:;"><img src="image/tl/tl (2).jpg" alt=""></a></li>
+			<li data-color="#fff"><a href="javascript:;"><img src="image/tl/tl (3).jpg" alt=""></a></li>
+			<li data-color="#2C415C"><a href="javascript:;"><img src="image/tl/tl (4).jpg" alt=""></a></li>
+			<li data-color="#364435"><a href="javascript:;"><img src="image/tl/tl (5).jpg" alt=""></a></li>
+		</ul>
+		<div class="inner_c">
+			<a href="javascript:;" class="L" id="L"></a>
+			<a href="javascript:;" class="R" id="R"></a>
+			<ol class="_ol" id="_ol">
+				<li class="cur"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ol>
 		</div>
 	</div>
-</body>
-</html>
-<script src="js/jquery-1.12.3.min.js"></script>
-<script type="text/javascript">
-	// 获取节点
-	var $leftBtn = $("#banner .leftBtn");
-	var $rightBtn = $("#banner .rightBtn");
-	var $circlesLis = $("#banner .circles li");
-	var $imageList = $("#banner .imageList ul li");
-	// 信号量
-	var idx = 0;
-	// 右按钮事件处理函数
-	$rightBtn.click(function(){
-
-		$imageList.eq(idx).fadeOut(500,function(){
-			// 这里的事件是500MS后触发的
-			$imageList.eq(idx).fadeIn(500);
-			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur');
-			// 下个图淡入的同时，改变li的背景颜色
-			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
-
-		});	
-		// 信号量大的变化，是和当前的图片淡出一起执行
-		idx++;
-		if( idx > $imageList.length -1){
-			idx = 0
-		}
-	})
-	$leftBtn.click(function(){
-
-		$imageList.eq(idx).fadeOut(500,function(){
-			// 这里的事件是500MS后触发的
-			$imageList.eq(idx).fadeIn(500);
-			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur')
-			// 下个图淡入的同时，改变li的背景颜色
-			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
-
-
-		});	
-		// 信号量大的变化，是和当前的图片淡出一起执行
-		idx--;
-		if( idx < 0){
-			idx = $imageList.length -1
-		}
-	})
-	$circlesLis.click(function(){
-		var i = $(this).index();
-		// 当前图淡出
-		$imageList.eq(idx).fadeOut(500,function(){
-
-			// 新图的淡入
-			$imageList.eq(idx).fadeIn(500);
-			// 小圆点的变化
-			$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur');
-			// 下个图淡入的同时，改变li的背景颜色
-			$imageList.eq(idx).css("background",$imageList.eq(idx).attr("data-color"))
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script>
+		var $imgLits = $("#_ul li");
+		var $circlesLis = $("#_ol li");
+		var $L = $("#L");
+		var $R = $("#R");
+		var idx = 0;
+		$R.click(function(){
+			$imgLits.eq(idx).fadeOut(500,function(){
+				idx++;
+				if(idx > $imgLits.length - 1){
+					idx = 0 ;
+				};
+				$imgLits.eq(idx).fadeIn(500);
+				$imgLits.eq(idx).css("background-color",$imgLits.eq(idx).attr("data-color"));
+				$circlesLis.eq(idx).addClass('cur').siblings().removeClass('cur');
+			})
 		});
-		// 改变信号量
-		idx = i;
-		
-	})
+		$L.click(function(){
+			$imgLits.eq(idx).fadeOut(500,function(){
+				idx--;
+				if(idx < 0){
+					idx = $imgLits.length - 1 ;
+				}
+				$imgLits.eq(idx).fadeIn(500);
+				$imgLits.eq(idx).css("background",$imgLits.eq(idx).attr("data-color"));
+				$circlesLis.eq(idx).addClass('cur').siblings().removeClass('cur');
+			})
+		})
+	var number = 0;
+	var timer_number;
+	$circlesLis.mouseenter(function(){
+		var i = $(this).index();
+		number = 0;
+		clearInterval(timer_number);
+		timer_number = setInterval(function(){
+			number++;
+			if( number > 200){
+				number=0;
+				// 当鼠标在小圆点上停留100MS的时候，去调用小圆点的处理函数
+				// changeCirclesLisHandle(i);
+				$imgLits.eq(idx).stop(true).fadeOut(500,function(){
+					// 新图的淡入
+					$imgLits.eq(idx).fadeIn(500);
+				});
+				// 改变信号量
+				idx = i;
+				// 小圆点的变化
+				$circlesLis.eq(idx).addClass("cur").siblings().removeClass('cur');
+				// 下个图淡入的同时，改变li的背景颜色
+				$imgLits.eq(idx).css("background",$imgLits.eq(idx).attr("data-color"))
+				clearInterval(timer_number);
+			}
+			
+		},1)
+	});
