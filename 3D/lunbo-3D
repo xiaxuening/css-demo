@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		ul{
+			list-style: none;
+		}
+		.carousel{
+			width: 1200px;
+			height: 400px;
+			border: 1px solid #000;
+			margin: 50px auto;
+			position: relative;
+		}
+		.carousel ul li{
+			position: absolute;
+		}
+		.carousel ul li img{
+			width: 100%;
+			height: 100%;
+		}
+		.carousel .btns a{
+			position: absolute;
+			z-index: 4;
+			width: 200px;
+			height: 400px;
+			top: 0px;
+		}
+		.carousel .btns a.leftBtn{
+			left: 0px;
+		}
+		.carousel .btns a.rightBtn{
+			right: 0px;
+		}
+		.carousel .mask {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background: black;
+			top: 0px;
+			left: 0px;
+		}
+	</style>
+</head>
+<body>
+	<div class="carousel">
+		<ul>
+			<li ><a href="javscript:void(0);"><img src="image/youku/1.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/2.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/3.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/4.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/5.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/6.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/7.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/8.jpg" alt=""></a><div class="mask"></div></li>
+			<li ><a href="javscript:void(0);"><img src="image/youku/9.jpg" alt=""></a><div class="mask"></div></li>
+		</ul>
+		<div class="btns">
+			<a href="javscript:void(0);" class="leftBtn"></a>
+			<a href="javscript:void(0);" class="rightBtn"></a>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	// 需要动画的数组
+	var jsonArr = [
+
+		{"width": "359px", "height": "150px", "top":"127px", "left":"0px","opacity":0},
+		{"width": "521px", "height": "220px", "top":"90px",  "left":"98px","opacity":1},
+		{"width": "640px", "height": "271px", "top":"65px",  "left":"280px","opacity":1},
+		{"width": "521px", "height": "220px", "top":"90px",  "left":"582px","opacity":1},
+		{"width": "359px", "height": "150px", "top":"127px", "left":"841px","opacity":0},
+		{},
+		{},
+		{},
+		{}
+	]
+	var zIndexArr = [
+		{ "z-index":1},
+		{ "z-index":2},
+		{ "z-index":3},
+		{ "z-index":2},
+		{ "z-index":1},
+		{ "opacity":0},
+		{ "opacity":0},
+		{ "opacity":0},
+		{ "opacity":0}
+	];
+	var maskOpacityArr = [
+		{"opacity":0.6},
+		{"opacity":0.6},
+		{"opacity":0},
+		{"opacity":0.6},
+		{"opacity":0.6},
+		{},
+		{},
+		{},
+		{}
+	]
+	// 初始化设置
+	function set(){
+		$(".carousel ul li").each(function(i){
+
+			$(this).css(zIndexArr[i]).animate(jsonArr[i], 500);
+			$(this).find(".mask").animate(maskOpacityArr[i],500);
+		});
+	}
+	set();
+	// 点击事件
+	$(".rightBtn").click(function(){
+		if($(".carousel ul li").is(":animated")) return;
+		// 核心语句（数组的操作）
+		jsonArr.unshift(jsonArr.pop());
+		zIndexArr.unshift(zIndexArr.pop());
+		maskOpacityArr.unshift(maskOpacityArr.pop());
+		set()
+	});
+	$(".leftBtn").click(function(){
+		if($(".carousel ul li").is(":animated")) return;
+		// 核心语句（数组的操作）
+		jsonArr.push(jsonArr.shift());
+		zIndexArr.push(zIndexArr.shift());
+		maskOpacityArr.push(maskOpacityArr.shift());
+		set();
+		})
+	</script>
