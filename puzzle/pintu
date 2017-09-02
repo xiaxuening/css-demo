@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>拼图轮播</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.carousel{
+			width: 900px;
+			height: 540px;
+			border: 1px solid #ccc;
+			margin: 0 auto;
+			position: relative;
+		}
+		.carousel ul{
+			list-style: none;
+		}
+		.carousel ul li{
+			display: none;
+		}
+		.carousel ul li.current{
+			display: block;
+		}
+		.carousel .btns a{
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			background-color: orange;
+			border-radius: 50%;
+			top: 50%;
+			margin-top: -30px;
+			z-index: 9999;
+		}
+		.carousel .btns a.leftBtn{
+			left: 10px;
+		}
+		.carousel .btns a.rightBtn{
+			right: 10px;
+		}
+		.carousel ol{
+			position: absolute;
+			bottom: 10px;
+			width: 220px;
+			height: 20px;
+			left: 50%;
+			margin-left: -110px;
+			list-style: none;
+			z-index: 99999;
+		}
+		.carousel ol li{
+			float: left;
+			width: 20px;
+			height: 20px;
+			background-color: yellow;
+			margin-right: 10px;
+			border-radius: 50%;
+		}
+		.carousel ol li.cur{
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="carousel">
+		<ul>
+			<li class="current"><a href="#"><img src="images/aoyun/0.jpg" alt="" /></a></li>
+			<li><a href="http://www.163.com"><img src="images/aoyun/1.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="images/aoyun/2.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="images/aoyun/3.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="images/aoyun/4.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="images/aoyun/5.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="images/aoyun/6.jpg" alt="" /></a></li>
+		</ul>
+		<div class="btns">
+			<a href="javascript:void(0);" class="leftBtn"></a>
+			<a href="javascript:void(0);" class="rightBtn"></a>
+		</div>
+		<ol>
+			<li class="cur"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ol>
+		<div id="magicbox"></div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+		//创建100个猫腻盒子
+		for(var i = 0 ; i < 100 ; i++){
+			$("<p>" + i + "</p>").css({
+				"position" : "absolute",
+				"width" : 90,
+				"height" : 54,
+				"left" : i % 10 * 90,
+				"top" : parseInt(i / 10) * 54,
+				"background-position" : -i % 10 * 90 + "px " + -parseInt(i / 10) * 54 + "px" ,
+				"display" : "none"
+			}).appendTo("#magicbox");
+		};
+
+		//信号量
+		var idx = 0;
+		//函数节流
+		var lock = true;
+		//点击右按钮做的事情
+		$(".rightBtn").click(function(){
+			//函数节流
+			if(!lock) return;
+
+			idx ++;
+			if(idx > $(".carousel ul li").length - 1){
+				idx = 0;
+			}
+			// 设置小圆点的cur
+			$(".carousel ol li").eq(idx).addClass("cur").siblings().removeClass("cur");
+
+			// 设置100张猫腻盒子的背景图片为要显示的这张图的src
+			var src = $(".carousel ul li img").eq(idx).attr("src");
+			$("#magicbox p").css("background-image" , "url(" + src + ")");
+			
+			//每个人有随机延迟，显示
+			$("#magicbox p").each(function(){
+				$(this).delay(Math.random() * 800).fadeIn();
+			});
+
+			//节流
+			lock = false;
+
+			//当所有元素都显示成功，此时去掉猫腻，让用户看见真的图片！！！
+			setTimeout(function(){
+				$("#magicbox p").hide();
+				//移动current属性
+				$(".carousel ul li").eq(idx).addClass("current").siblings().removeClass("current");
+				//节流
+				lock = true;
+			},1000);
+		});
+	</script>
+</body>
+</html>
