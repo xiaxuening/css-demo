@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        .box{
+            width:280px;
+            height: 44px;
+            border: 1px solid;
+            margin:100px auto;
+        }
+        .box ul li{
+            width: 56px;
+            height: 44px;
+            font-size: 50px;
+            line-height: 44px;
+            float: left;
+            color: #c40e39;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul class="comment">
+            <li>☆</li>
+            <li>☆</li>
+            <li>☆</li>
+            <li>☆</li>
+            <li>☆</li>
+        </ul>
+    </div>
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script>
+ 
+        $(".comment").on("mouseenter","li",function(){
+            $(this).text("★").prevAll().text("★").end().nextAll().text("☆");
+        }).on("click","li",function(){
+            $(this).addClass("checked").siblings().removeClass("checked");
+        }).on("mouseleave",function(){
+            $("ul li").text("☆");
+            $(".checked").text("★").prevAll().text("★").end().nextAll().text("☆");
+        })
+
+    </script>
+</body>
+</html>
